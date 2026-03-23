@@ -19,8 +19,9 @@ The initial UML design includes four classes:
 
 **b. Design changes**
 
-- Did your design change during implementation?
-- If yes, describe at least one change and why you made it.
+- Did your design change during implementation? Yes.
+- If yes, describe at least one change and why you made it?
+ During review of the class skeletons, one potential bottleneck was identified: both `Owner` and `Scheduler` define a `get_all_tasks()` method, which risks duplicating logic. To avoid this, `Scheduler.get_all_tasks()` will delegate directly to `owner.get_all_tasks()` rather than re-implementing the same traversal. This keeps task retrieval logic in one place and ensures the `Scheduler` stays focused on scheduling decisions rather than data access.
 
 ---
 
