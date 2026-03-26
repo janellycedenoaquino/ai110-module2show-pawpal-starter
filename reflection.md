@@ -37,6 +37,10 @@ The initial UML design includes four classes:
 - Describe one tradeoff your scheduler makes.
 - Why is that tradeoff reasonable for this scenario?
 
+The method (`detect_conflicts`) uses a single-pass dictionary approach: it records the first task seen for each time slot and flags any later task that shares that same slot. So if three tasks are scheduled at the same time, it reports the first against the second and the first against the third — but not the second against the third directly.
+
+This is a tradeoff is between simplicity and completeness. A full comparison would catch every conflict pair, but would require nested loops and produce redundant warnings. Since the goal is just to alert the owner that a time slot is overloaded. a single-pass approach is enough and keeps the code readable.
+
 ---
 
 ## 3. AI Collaboration

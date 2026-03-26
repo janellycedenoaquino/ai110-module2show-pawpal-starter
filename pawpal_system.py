@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from typing import List, Optional
+from datetime import datetime, date, timedelta
 
 
 @dataclass
@@ -10,6 +11,7 @@ class Task:
     scheduled_time: str
     frequency: str
     is_complete: bool = False
+    due_date: date = field(default_factory=date.today)
 
     def mark_complete(self):
         """Mark this task as complete."""
@@ -59,7 +61,7 @@ class Scheduler:
 
     def sort_by_time(self) -> List[Task]:
         """Return all tasks sorted chronologically by scheduled time."""
-        return sorted(self.get_all_tasks(), key=lambda t: t.scheduled_time)
+        return sorted(self.get_all_tasks(), key=lambda t: datetime.strptime(t.scheduled_time, "%H:%M"))
 
     def filter_tasks(self, pet: Optional[str] = None, status: Optional[bool] = None) -> List[Task]:
         """Return tasks filtered by pet name and/or completion status."""
@@ -68,7 +70,7 @@ class Scheduler:
             tasks = []
             for p in self.owner.pets:
                 if p.name == pet:
-                    tasks = p.get_tasks()
+                    tasks.extend(p.get_tasks())
         if status is not None:
             tasks = [t for t in tasks if t.is_complete == status]
         return tasks
@@ -90,3 +92,23 @@ class Scheduler:
     def generate_schedule(self) -> List[Task]:
         """Generate a daily schedule by returning all tasks sorted by time."""
         return self.sort_by_time()
+
+    def complete_task(self, task: Task, pet_name: str) -> Optional[Task]:
+        """Mark a task complete and create the next occurrence for daily/weekly tasks."""
+        task.mark_complete()
+        if task.frequency not in ("daily", "weekly"):
+            return None
+        delta = timedelta(days=1) if task.frequency == "daily" else timedelta(weeks=1)
+        next_task = Task(
+            title=task.title,
+            duration=task.duration,
+            priority=task.priority,
+            scheduled_time=task.scheduled_time,
+            frequency=task.frequency,
+            due_date=task.due_date + delta,
+        )
+        for pet in self.owner.pets:
+            if pet.name == pet_name:
+                pet.add_task(next_task)
+                break
+        return next_task
