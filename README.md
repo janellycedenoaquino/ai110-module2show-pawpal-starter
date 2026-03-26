@@ -22,14 +22,30 @@ Your final app should:
 - Display the plan clearly (and ideally explain the reasoning)
 - Include tests for the most important scheduling behaviors
 
+## Features
+
+- **Add owner and pets** — set up your household with an owner profile and one or more pets
+- **Add care tasks** — log tasks (walks, feeding, meds, grooming, etc.) with a title, duration, priority, and scheduled time
+- **Sorting by time** — the daily schedule is always displayed in chronological order
+- **Filter tasks** — filter the task list by pet name or completion status
+- **Conflict warnings** — the scheduler automatically detects and warns about tasks scheduled at the same time
+- **Daily recurrence** — completing a daily or weekly task automatically schedules the next occurrence
+- **Generate schedule** — produce a clean, sorted daily plan with one click
+
 ## Getting started
 
 ### Setup
 
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+pip3 install -r requirements.txt
+```
+
+### Run the app
+
+```bash
+streamlit run app.py
 ```
 
 ## Testing PawPal+
@@ -37,11 +53,7 @@ pip install -r requirements.txt
 Run the test suite with:
 
 ```bash
-python -m pytest 
-```
-or for mac
-```
-python3 -m pytest
+python -m pytest  #MAC python3 -m pytest
 ```
 
 The tests cover:
@@ -66,12 +78,6 @@ PawPal+ goes beyond a basic task list with the following algorithmic features:
 - **Conflict detection** — the scheduler scans all tasks across all pets and warns the owner when two tasks are scheduled at the same time
 - **Recurring tasks** — when a `daily` or `weekly` task is marked complete, a new instance is automatically created for the next occurrence using Python's `timedelta`
 
-### Suggested workflow
+## 📸 Demo
 
-1. Read the scenario carefully and identify requirements and edge cases.
-2. Draft a UML diagram (classes, attributes, methods, relationships).
-3. Convert UML into Python class stubs (no logic yet).
-4. Implement scheduling logic in small increments.
-5. Add tests to verify key behaviors.
-6. Connect your logic to the Streamlit UI in `app.py`.
-7. Refine UML so it matches what you actually built.
+<a href="/course_images/ai110/pawpal_screenshot.png" target="_blank"><img src='/course_images/ai110/pawpal_screenshot.png' title='PawPal App' width='' alt='PawPal App' class='center-block' /></a>

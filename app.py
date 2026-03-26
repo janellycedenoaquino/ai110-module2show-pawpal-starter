@@ -73,18 +73,35 @@ else:
                     pet.add_task(new_task)
             st.success(f"Task '{task_title}' added to {selected_pet}!")
 
-    # Show current tasks
+    # Show current tasks via Scheduler (sorted + filterable)
     all_tasks = st.session_state.owner.get_all_tasks()
     if all_tasks:
-        st.write("Current tasks:")
-        st.table([{
-            "Title": t.title,
-            "Pet": selected_pet,
-            "Time": t.scheduled_time,
-            "Duration": t.duration,
-            "Priority": t.priority,
-            "Done": t.is_complete
-        } for t in all_tasks])
+        scheduler = Scheduler(st.session_state.owner)
+
+        col_f1, col_f2 = st.columns(2)
+        with col_f1:
+            filter_pet = st.selectbox("Filter by pet", ["All"] + pet_options)
+        with col_f2:
+            filter_status = st.selectbox("Filter by status", ["All", "Complete", "Incomplete"])
+
+        pet_filter = None if filter_pet == "All" else filter_pet
+        status_filter = None if filter_status == "All" else (filter_status == "Complete")
+
+        filtered = scheduler.filter_tasks(pet=pet_filter, status=status_filter)
+        task_to_pet = {id(t): p.name for p in st.session_state.owner.pets for t in p.get_tasks()}
+
+        if filtered:
+            st.write("Current tasks:")
+            st.table([{
+                "Time": t.scheduled_time,
+                "Title": t.title,
+                "Pet": task_to_pet.get(id(t), "—"),
+                "Duration (mins)": t.duration,
+                "Priority": t.priority,
+                "Done": t.is_complete
+            } for t in filtered])
+        else:
+            st.info("No tasks match the selected filter.")
     else:
         st.info("No tasks yet. Add one above.")
 
