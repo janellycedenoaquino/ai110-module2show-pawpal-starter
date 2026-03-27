@@ -79,5 +79,9 @@ PawPal+ goes beyond a basic task list with the following algorithmic features:
 - **Recurring tasks** — when a `daily` or `weekly` task is marked complete, a new instance is automatically created for the next occurrence using Python's `timedelta`
 
 ## 📸 Demo
+<a href="Images/PawPal_.png" target="_blank"><img src='Images/PawPal_.png' title='PawPal+ App' width='' alt='PawPal App' class='center-block' /></a>
 
-<a href="/course_images/ai110/pawpal_screenshot.png" target="_blank"><img src='/course_images/ai110/pawpal_screenshot.png' title='PawPal App' width='' alt='PawPal App' class='center-block' /></a>
+<a href="Images/PawPal_.png" target="_blank"><img src='Images/PawPal_Added_Pets.png' title='PawPal+ added pets App' width='' alt='PawPal+ added pets App' class='center-block' /></a>
+
+
+<a href="Images/PawPal_Added_Tasks.png" target="_blank"><img src='Images/PawPal_Added_Tasks.png' title='PawPal+ added tasks App' width='' alt='PawPal+ added tasks App' class='center-block' /></a>

@@ -125,9 +125,11 @@ The most satisfying part of the project was learning how to collaborate with AI 
 
 - If you had another iteration, what would you improve or redesign?
 
-Two things:
+Four things:
 First, data persistence — everything currently lives in `st.session_state`, which means refreshing the page wipes all pets and tasks. Adding save/load functionality (e.g., to a JSON file) would make the app genuinely useful day-to-day rather than just a demo.
 Second, duplicate pet names — the app doesn't prevent two pets from having the same name, which would cause `filter_tasks(pet=...)` to return tasks from both pets unintentionally. Adding a uniqueness check when adding a pet would be a small fix with a big impact on reliability.
+Third, owner name validation — the app currently allows a pet to be added without the owner first entering their name. Adding a guard that requires the owner name field to be filled before any pets or tasks can be added would make the flow more intentional and prevent orphaned data.
+Fourth, task deletion — once a task is added there is no way to remove it. Adding a delete button or checkbox next to each task in the table would give the owner control over their schedule and make the app significantly more practical to use.
 
 **c. Key takeaway**
 
